@@ -22,7 +22,7 @@ function Desodorante() {
 
   return (
     <Container fluid className="my-5">
-      <h1 className="mb-4">Desodorantes</h1>
+      <h1 className="d-flex justify-content-center align-items-center mb-4">Desodorantes</h1>
       {loading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
           <Spinner animation="border" variant="primary" /> {/* Spinner de carga */}

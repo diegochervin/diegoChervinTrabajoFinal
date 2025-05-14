@@ -2,7 +2,7 @@ import React from 'react';
 import {Navbar,Nav,Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import logo from '../img/logo.jpeg'; 
-import carrito from '../img/carrito.png'; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 
 const Header = () => {
