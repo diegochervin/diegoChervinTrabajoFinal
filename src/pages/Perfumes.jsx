@@ -13,8 +13,10 @@ function Perfume() {
         const response = await fetch("https://etherealparfums.netlify.app/producto.json");
         const data = await response.json();
         // Normalizar los datos para que coincidan con CardProducto
+        const tipo = "perfume";
         const normalizados = data.map(d => ({
-          id: d.id,
+          
+          id: `${tipo}-${d.id}`,
           marca: d.marca,
           nombre: d.nombre,
           precio: d.precio,
@@ -22,7 +24,8 @@ function Perfume() {
           stock: d.stock ?? "",
           tamano: d.tamano ?? "",
           clon: d.clon ?? "",
-          color: d.color ?? ""
+          color: d.color ?? "",
+          tipo: d.tipo,
         }));
         setPerfume(normalizados);
       } finally {

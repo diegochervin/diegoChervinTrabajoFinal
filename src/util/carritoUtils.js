@@ -13,9 +13,14 @@ export const guardarCarrito = (carrito) => {
   localStorage.setItem("carrito", JSON.stringify(carrito));
 };
 
+// Función para obtener la cantidad total
+export const obtenerCantidadTotal = () => {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  return carrito.reduce((acc, item) => acc + item.cantidad, 0);
+};
+
 // Función para agregar producto al carrito
-export const agregarAlCarrito = (producto, cantidad, carritoActual) => {
-  // Verificar que la cantidad sea válida
+export const agregarAlCarrito = (producto, cantidad, carritoActual, mostrarToast = true) => {
   if (cantidad <= 0) {
     Swal.fire({
       title: `No es posible agregar ${cantidad} unidades.`,
@@ -25,7 +30,6 @@ export const agregarAlCarrito = (producto, cantidad, carritoActual) => {
     return { carrito: carritoActual, agregado: false };
   }
 
-  // Verificar stock disponible
   if (cantidad > producto.stock) {
     Swal.fire({
       title: `No es posible agregar ${cantidad} unidades. Solo tenemos ${producto.stock} en stock.`,
@@ -35,12 +39,10 @@ export const agregarAlCarrito = (producto, cantidad, carritoActual) => {
     return { carrito: carritoActual, agregado: false };
   }
 
-  // Buscar si el producto ya está en el carrito
   const productoEnCarrito = carritoActual.find(item => item.id === producto.id);
   const nuevoCarrito = [...carritoActual];
 
   if (!productoEnCarrito) {
-    // Si no está en el carrito, agregarlo
     nuevoCarrito.push({
       ...producto,
       id: producto.id || producto.ID,
@@ -48,17 +50,18 @@ export const agregarAlCarrito = (producto, cantidad, carritoActual) => {
       cantidad: cantidad
     });
 
-    Toastify({
-      text: `Se han agregado ${cantidad} unidades de ${producto.nombre}.`,
-      duration: 3000,
-      gravity: "bottom",
-      position: "right",
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      }
-    }).showToast();
+    if (mostrarToast) {
+      Toastify({
+        text: `Se han agregado ${cantidad} unidades de ${producto.nombre}.`,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+    }
   } else {
-    // Verificar si la cantidad total no excede el stock
     if ((cantidad + productoEnCarrito.cantidad) > producto.stock) {
       Swal.fire({
         title: `No es posible agregar ${cantidad} unidades. Ya tienes ${productoEnCarrito.cantidad} en el carrito y solo tenemos ${producto.stock} en stock.`,
@@ -68,30 +71,31 @@ export const agregarAlCarrito = (producto, cantidad, carritoActual) => {
       return { carrito: carritoActual, agregado: false };
     }
 
-    // Actualizar cantidad del producto existente
     const index = nuevoCarrito.findIndex(item => item.id === producto.id);
     nuevoCarrito[index] = {
       ...productoEnCarrito,
       cantidad: productoEnCarrito.cantidad + cantidad
     };
 
-    Toastify({
-      text: `Se han agregado ${cantidad} unidades adicionales de ${producto.nombre}. Ahora tienes ${productoEnCarrito.cantidad + cantidad} en total.`,
-      duration: 3000,
-      gravity: "bottom",
-      position: "right",
-      style: {
-        background: "linear-gradient(to right, #00b09b, #96c93d)",
-      }
-    }).showToast();
+    if (mostrarToast) {
+      Toastify({
+        text: `Se han agregado ${cantidad} unidades adicionales de ${producto.nombre}. Ahora tienes ${productoEnCarrito.cantidad + cantidad} en total.`,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+    }
   }
 
-  // Guardar el carrito actualizado
   guardarCarrito(nuevoCarrito);
-  console.log("Producto agregado al carrito:", producto, "Cantidad:", cantidad);
+  window.dispatchEvent(new Event("carritoActualizado"));
   return { carrito: nuevoCarrito, agregado: true };
-}; 
+};
 
+// Función para restar cantidad o eliminar del carrito
 export const restarDelCarrito = async (productoId, carritoActual) => {
   const nuevoCarrito = [...carritoActual];
   const index = nuevoCarrito.findIndex(item => item.id === productoId);
@@ -101,7 +105,6 @@ export const restarDelCarrito = async (productoId, carritoActual) => {
   if (nuevoCarrito[index].cantidad > 1) {
     nuevoCarrito[index].cantidad -= 1;
   } else {
-    // Confirmar si se elimina el producto
     const confirmacion = await Swal.fire({
       title: `¿Eliminar "${nuevoCarrito[index].nombre}" del carrito?`,
       text: "La cantidad va a ser 0. ¿Deseás eliminarlo?",

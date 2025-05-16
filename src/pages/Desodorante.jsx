@@ -13,16 +13,18 @@ function Desodorante() {
         const response = await fetch("https://etherealparfums.netlify.app/desodorante.json");
         const data = await response.json();
         // Normalizar los datos para que coincidan con CardProducto
+        const tipo = "desodorante";
         const normalizados = data.map(d => ({
-          id: d.ID,
+          id: `${tipo}-${d.ID}`,
           marca: d.MARCA,
           nombre: d.MODELO,
           precio: d.PRECIO,
           foto: d.FOTO,
-          stock: d.STOCK ?? "",
+          stock: d.STOCK ?? "10",
           tamano: d.TAMANO ?? "",
           clon: d.CLON ?? "",
           color: d.COLOR ?? "",
+          tipo: d.TIPO
         }));
         setDesodorante(normalizados);
       } finally {
