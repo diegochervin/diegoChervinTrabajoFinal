@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Asegúrate de que Bootstrap es
 
 const CardProducto = ({ producto }) => {
   
-  const { id, marca, nombre, tamano, clon, foto, stock, precio } = producto; // Desestructuración de producto
+  const { id, marca, nombre, tamano, clon, foto, stock, precio, color } = producto; // Desestructuración de producto
   
   return (
     <Card className="h-100 shadow-sm">
@@ -22,23 +22,13 @@ const CardProducto = ({ producto }) => {
       </div>
 
       <Card.Body className="d-flex flex-column">
-        <Card.Title className="">{nombre}</Card.Title>
-        <Card.Text
-          className="text-muted"
-          style={{
-            fontSize: "0.85rem",
-            overflow: "hidden",
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-          }}
-        >
-          {marca}
-        </Card.Text>
+        <Card.Title>{nombre}</Card.Title>
+        <Card.Text className="text-muted">{marca}</Card.Text>
         <Card.Text className="fw-bold text-primary">U$S {precio}</Card.Text>
-        <Card.Text className="text-secondary">Clon: {clon}</Card.Text>
-        <Card.Text className="text-warning">Stock: {stock} </Card.Text>
-        <Card.Text className="text-warning">Tamaño: {tamano} </Card.Text>
+        {clon && <Card.Text className="text-secondary">Clon: {clon}</Card.Text>}
+        <Card.Text className="text-warning">Stock: {stock}</Card.Text>
+        {tamano && <Card.Text className="text-warning">Tamaño: {tamano}</Card.Text>}
+        {color && <Card.Text className="text-info">Color: {color}</Card.Text>}
         <Button variant="primary" className="mt-auto">Agregar al carrito</Button>
       </Card.Body>
     </Card>

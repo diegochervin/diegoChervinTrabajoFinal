@@ -22,7 +22,7 @@ const Header = () => {
       <Nav className="ms-auto">
         <Nav.Link as={Link} to="/Contact">Contacto</Nav.Link>
         <Nav.Link as={Link} to="/Login">Iniciar Sesion</Nav.Link>
-        <Nav.Link as={Link} to="/about">Registrate</Nav.Link>
+        <Nav.Link as={Link} to="/register">Registrate</Nav.Link>
         <Nav.Link as={Link} to="/carrito" title="Ver carrito">
   <i className="bi bi-cart" style={{ fontSize: '1.5rem', color: 'white' }}></i>
 </Nav.Link>

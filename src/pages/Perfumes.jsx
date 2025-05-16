@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import CardPerfume from "./CardPerfume";
+import CardProducto from "../components/CardProducto";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
@@ -12,7 +12,19 @@ function Perfume() {
       try {
         const response = await fetch("https://etherealparfums.netlify.app/producto.json");
         const data = await response.json();
-        setPerfume(data);
+        // Normalizar los datos para que coincidan con CardProducto
+        const normalizados = data.map(d => ({
+          id: d.id,
+          marca: d.marca,
+          nombre: d.nombre,
+          precio: d.precio,
+          foto: d.foto,
+          stock: d.stock ?? "",
+          tamano: d.tamano ?? "",
+          clon: d.clon ?? "",
+          color: d.color ?? ""
+        }));
+        setPerfume(normalizados);
       } finally {
         setLoading(false);
       }
@@ -25,13 +37,13 @@ function Perfume() {
       <h1 className="d-flex justify-content-center align-items-center mb-4">Perfumes</h1>
       {loading ? (
         <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
-          <Spinner animation="border" variant="primary" /> {/* Spinner de carga */}
+          <Spinner animation="border" variant="primary" />
         </div>
       ) : (
         <Row className="g-4">
-          {perfumes.map((perfume) => (
-            <Col key={perfume.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-              <CardPerfume perfume={perfume} />
+          {perfumes.map((producto) => (
+            <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+              <CardProducto producto={producto} />
             </Col>
           ))}
         </Row>
