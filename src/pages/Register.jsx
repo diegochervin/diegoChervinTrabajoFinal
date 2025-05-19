@@ -11,8 +11,8 @@ function Register() {
     newsletter: false
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwords, setPassword] = useState(false);
+  const [confirmarPasswords, setConfirmarPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -47,6 +47,7 @@ function Register() {
                         value={formData.nombre}
                         onChange={handleChange}
                         required
+                        autoComplete='username'
                       />
                     </Form.Group>
 
@@ -59,6 +60,7 @@ function Register() {
                         value={formData.email}
                         onChange={handleChange}
                         required
+                        autoComplete='email'
                       />
                     </Form.Group>
 
@@ -66,19 +68,20 @@ function Register() {
                       <Form.Label>Contraseña</Form.Label>
                       <InputGroup>
                         <Form.Control
-                          type={showPassword ? "text" : "password"}
+                          type={passwords ? "text" : "password"}
                           name="password"
                           placeholder="Contraseña"
                           value={formData.password}
                           onChange={handleChange}
                           required
+                            autoComplete="new-password"
                         />
                         <Button
                           variant="outline-secondary"
-                          onClick={() => setShowPassword(!showPassword)}
+                          onClick={() => setPassword(!passwords)}
                           type="button"
                         >
-                          <i className={`bi bi-eye${showPassword ? '-slash' : ''}`}></i>
+                          <i className={`bi bi-eye${passwords ? '-slash' : ''}`}></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>
@@ -87,19 +90,20 @@ function Register() {
                       <Form.Label>Repetir Contraseña</Form.Label>
                       <InputGroup>
                         <Form.Control
-                          type={showConfirmPassword ? "text" : "password"}
+                          type={confirmarPasswords ? "text" : "password"}
                           name="confirmPassword"
                           placeholder="Repetir contraseña"
                           value={formData.confirmPassword}
                           onChange={handleChange}
                           required
+                            autoComplete="new-password"
                         />
                         <Button
                           variant="outline-secondary"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          onClick={() => setConfirmarPassword(!confirmarPasswords)}
                           type="button"
                         >
-                          <i className={`bi bi-eye${showConfirmPassword ? '-slash' : ''}`}></i>
+                          <i className={`bi bi-eye${confirmarPasswords ? '-slash' : ''}`}></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>

@@ -12,7 +12,7 @@ function Desodorante() {
       try {
         const response = await fetch("https://etherealparfums.netlify.app/desodorante.json");
         const data = await response.json();
-        // Normalizar los datos para que coincidan con CardProducto
+      // Normalizar los datos para que coincidan con CardProducto
         const tipo = "desodorante";
         const normalizados = data.map(d => ({
           id: `${tipo}-${d.ID}`,

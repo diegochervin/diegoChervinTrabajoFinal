@@ -88,7 +88,7 @@ function Carrito() {
                   <tr key={item.id}>
                     <td>
                       <img
-                        src={item.foto || "https://via.placeholder.com/60"}
+                        src={item.foto}
                         alt={item.nombre}
                         className="rounded"
                         style={{ width: 60, height: 60, objectFit: "cover" }}

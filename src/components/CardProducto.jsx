@@ -5,9 +5,6 @@ import { useState } from "react";
 import { agregarAlCarrito, obtenerCarrito } from "../util/carritoUtils"; 
 
 
-
-
-
 const CardProducto = ({ producto }) => {
 
   const { id, marca, nombre, tamano, clon, foto, stock, precio, color, tipo } = producto; 

@@ -12,7 +12,6 @@ const Header = () => {
   useEffect(() => {
     setCantidadCarrito(obtenerCantidadTotal());
 
-    // Escuchá cambios en el carrito con un eventListener personalizado
     const handleStorageChange = () => {
       setCantidadCarrito(obtenerCantidadTotal());
     };
@@ -45,7 +44,7 @@ const Header = () => {
     <span
       className="position-absolute top-0 start-100 badge rounded-pill bg-danger"
       style={{
-        transform: 'translate(-60%, 0%)', // empuja más arriba y a la derecha
+        transform: 'translate(-60%, 0%)', 
         padding: '0.5rem',
         fontSize: '0.75rem',
         lineHeight: '1rem'
