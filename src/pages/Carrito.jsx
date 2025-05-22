@@ -1,10 +1,5 @@
 import { Container, Button } from "react-bootstrap";
-import {
-  obtenerCarrito,
-  guardarCarrito,
-  agregarAlCarrito,
-  restarDelCarrito,
-} from "../util/carritoUtils";
+import { obtenerCarrito, guardarCarrito, agregarAlCarrito, restarDelCarrito, } from "../util/carritoUtils";
 import Swal from "sweetalert2";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";

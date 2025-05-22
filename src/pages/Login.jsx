@@ -7,7 +7,6 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ver si el email y la contraseña son válidos
     console.log("Login attempt with:", { email, password });
   };
 

@@ -9,6 +9,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import registro from "../img/registro.webp";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -32,7 +33,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     console.log(formData);
   };
 
@@ -41,9 +41,12 @@ function Register() {
       <Row className="justify-content-center">
         <Col md={10} lg={8}>
           <Card className="shadow">
-            <Card.Body className="p-5">
-              <Row>
-                <Col md={6} className="order-2 order-md-1">
+            <Card.Body className="p-0">
+              <Row className="g-0 flex-column flex-md-row" style={{ minHeight: "100%" }}>
+                <Col
+                  md={6}
+                  className="order-2 order-md-1 d-flex flex-column justify-content-center p-5"
+                >
                   <h2 className="text-center mb-4">Registrarse</h2>
                   <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
@@ -89,9 +92,7 @@ function Register() {
                           onClick={() => setPassword(!passwords)}
                           type="button"
                         >
-                          <i
-                            className={`bi bi-eye${passwords ? "-slash" : ""}`}
-                          ></i>
+                          <i className={`bi bi-eye${passwords ? "-slash" : ""}`}></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>
@@ -110,16 +111,10 @@ function Register() {
                         />
                         <Button
                           variant="outline-secondary"
-                          onClick={() =>
-                            setConfirmarPassword(!confirmarPasswords)
-                          }
+                          onClick={() => setConfirmarPassword(!confirmarPasswords)}
                           type="button"
                         >
-                          <i
-                            className={`bi bi-eye${
-                              confirmarPasswords ? "-slash" : ""
-                            }`}
-                          ></i>
+                          <i className={`bi bi-eye${confirmarPasswords ? "-slash" : ""}`}></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>
@@ -142,13 +137,14 @@ function Register() {
 
                 <Col
                   md={6}
-                  className="order-1 order-md-2 d-flex align-items-center justify-content-center"
+                  className="order-1 order-md-2 d-flex"
+                  style={{ minHeight: "400px" }}
                 >
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                    alt="Registration illustration"
-                    className="img-fluid"
-                    style={{ maxHeight: "400px" }}
+                    src={registro}
+                    alt="Foto de registro"
+                    className="w-100 h-100"
+                    style={{ objectFit: "cover" }}
                   />
                 </Col>
               </Row>
