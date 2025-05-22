@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
-import { Container, Form, Button, Card, Row, Col, InputGroup } from 'react-bootstrap';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import React, { useState } from "react";
+import {
+  Container,
+  Form,
+  Button,
+  Card,
+  Row,
+  Col,
+  InputGroup,
+} from "react-bootstrap";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function Register() {
   const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    newsletter: false
+    nombre: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    newsletter: false,
   });
 
   const [passwords, setPassword] = useState(false);
@@ -16,16 +24,16 @@ function Register() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log( formData);
+    console.log(formData);
   };
 
   return (
@@ -47,7 +55,7 @@ function Register() {
                         value={formData.nombre}
                         onChange={handleChange}
                         required
-                        autoComplete='username'
+                        autoComplete="username"
                       />
                     </Form.Group>
 
@@ -60,7 +68,7 @@ function Register() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        autoComplete='email'
+                        autoComplete="email"
                       />
                     </Form.Group>
 
@@ -74,14 +82,16 @@ function Register() {
                           value={formData.password}
                           onChange={handleChange}
                           required
-                            autoComplete="new-password"
+                          autoComplete="new-password"
                         />
                         <Button
                           variant="outline-secondary"
                           onClick={() => setPassword(!passwords)}
                           type="button"
                         >
-                          <i className={`bi bi-eye${passwords ? '-slash' : ''}`}></i>
+                          <i
+                            className={`bi bi-eye${passwords ? "-slash" : ""}`}
+                          ></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>
@@ -96,14 +106,20 @@ function Register() {
                           value={formData.confirmPassword}
                           onChange={handleChange}
                           required
-                            autoComplete="new-password"
+                          autoComplete="new-password"
                         />
                         <Button
                           variant="outline-secondary"
-                          onClick={() => setConfirmarPassword(!confirmarPasswords)}
+                          onClick={() =>
+                            setConfirmarPassword(!confirmarPasswords)
+                          }
                           type="button"
                         >
-                          <i className={`bi bi-eye${confirmarPasswords ? '-slash' : ''}`}></i>
+                          <i
+                            className={`bi bi-eye${
+                              confirmarPasswords ? "-slash" : ""
+                            }`}
+                          ></i>
                         </Button>
                       </InputGroup>
                     </Form.Group>
@@ -124,12 +140,15 @@ function Register() {
                   </Form>
                 </Col>
 
-                <Col md={6} className="order-1 order-md-2 d-flex align-items-center justify-content-center">
+                <Col
+                  md={6}
+                  className="order-1 order-md-2 d-flex align-items-center justify-content-center"
+                >
                   <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
                     alt="Registration illustration"
                     className="img-fluid"
-                    style={{ maxHeight: '400px' }}
+                    style={{ maxHeight: "400px" }}
                   />
                 </Col>
               </Row>

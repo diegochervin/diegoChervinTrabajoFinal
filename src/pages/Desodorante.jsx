@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CardProducto from "../components/CardProducto";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Desodorante() {
   const [desodorantes, setDesodorante] = useState([]);
@@ -10,11 +10,13 @@ function Desodorante() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://etherealparfums.netlify.app/desodorante.json");
+        const response = await fetch(
+          "https://etherealparfums.netlify.app/desodorante.json"
+        );
         const data = await response.json();
-      // Normalizar los datos para que coincidan con CardProducto
+        // Normalizar los datos para que coincidan con CardProducto
         const tipo = "desodorante";
-        const normalizados = data.map(d => ({
+        const normalizados = data.map((d) => ({
           id: `${tipo}-${d.ID}`,
           marca: d.MARCA,
           nombre: d.MODELO,
@@ -24,7 +26,7 @@ function Desodorante() {
           tamano: d.TAMANO ?? "",
           clon: d.CLON ?? "",
           color: d.COLOR ?? "",
-          tipo: d.TIPO
+          tipo: d.TIPO,
         }));
         setDesodorante(normalizados);
       } finally {
@@ -36,9 +38,14 @@ function Desodorante() {
 
   return (
     <Container fluid className="my-5">
-      <h1 className="d-flex justify-content-center align-items-center mb-4">Desodorantes</h1>
+      <h1 className="d-flex justify-content-center align-items-center mb-4">
+        Desodorantes
+      </h1>
       {loading ? (
-        <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "200px" }}
+        >
           <Spinner animation="border" variant="primary" />
         </div>
       ) : (

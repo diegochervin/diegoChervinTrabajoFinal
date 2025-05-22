@@ -1,4 +1,4 @@
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 
 function Contact() {
   return (
@@ -19,7 +19,9 @@ function Contact() {
               <Form.Label>Mensaje</Form.Label>
               <Form.Control as="textarea" rows={3} />
             </Form.Group>
-            <Button variant="primary" type="submit" className="w-100">Enviar</Button>
+            <Button variant="primary" type="submit" className="w-100">
+              Enviar
+            </Button>
           </Form>
         </Col>
       </Row>

@@ -1,15 +1,18 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { obtenerCarrito, guardarCarrito, agregarAlCarrito, restarDelCarrito } from '../util/carritoUtils';
-import Swal from 'sweetalert2';
-import Toastify from 'toastify-js';
+import { Container, Button } from "react-bootstrap";
+import {
+  obtenerCarrito,
+  guardarCarrito,
+  agregarAlCarrito,
+  restarDelCarrito,
+} from "../util/carritoUtils";
+import Swal from "sweetalert2";
+import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-import { useState } from 'react';
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 
 function Carrito() {
   const [carrito, setCarrito] = useState(() => obtenerCarrito());
-
 
   const actualizarCarrito = (nuevo) => {
     guardarCarrito(nuevo);
@@ -18,7 +21,7 @@ function Carrito() {
   };
 
   const eliminarDelCarrito = (id) => {
-    const nuevoCarrito = carrito.filter(item => item.id !== id);
+    const nuevoCarrito = carrito.filter((item) => item.id !== id);
     actualizarCarrito(nuevoCarrito);
 
     Toastify({
@@ -26,7 +29,7 @@ function Carrito() {
       duration: 2000,
       gravity: "top",
       position: "right",
-      backgroundColor: "#dc3545"
+      backgroundColor: "#dc3545",
     }).showToast();
   };
 
@@ -37,7 +40,7 @@ function Carrito() {
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Sí, vaciar",
-      cancelButtonText: "Cancelar"
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
         actualizarCarrito([]);
@@ -46,7 +49,7 @@ function Carrito() {
           duration: 2000,
           gravity: "top",
           position: "right",
-          backgroundColor: "#ffc107"
+          backgroundColor: "#ffc107",
         }).showToast();
       }
     });
@@ -56,12 +59,15 @@ function Carrito() {
     Swal.fire({
       title: "¡Gracias por tu compra!",
       text: `Total: $${totalCarrito.toLocaleString()}`,
-      icon: "success"
+      icon: "success",
     });
     actualizarCarrito([]);
   };
 
-  const totalCarrito = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  const totalCarrito = carrito.reduce(
+    (acc, item) => acc + item.precio * item.cantidad,
+    0
+  );
 
   return (
     <Container className="mt-5">
@@ -111,7 +117,12 @@ function Carrito() {
                           variant="success"
                           size="sm"
                           onClick={() => {
-                            const { carrito: nuevo } = agregarAlCarrito(item, 1, carrito, false);
+                            const { carrito: nuevo } = agregarAlCarrito(
+                              item,
+                              1,
+                              carrito,
+                              false
+                            );
                             actualizarCarrito(nuevo);
                           }}
                         >
@@ -121,7 +132,10 @@ function Carrito() {
                           variant="secondary"
                           size="sm"
                           onClick={async () => {
-                            const nuevo = await restarDelCarrito(item.id, carrito);
+                            const nuevo = await restarDelCarrito(
+                              item.id,
+                              carrito
+                            );
                             if (Array.isArray(nuevo)) {
                               actualizarCarrito(nuevo);
                             }
@@ -137,15 +151,18 @@ function Carrito() {
             </table>
           </div>
 
-
           <hr />
           <h3 className="text-end text-success fw-bold">
             Total a pagar: ${totalCarrito.toLocaleString()}
           </h3>
 
           <div className="d-flex justify-content-end gap-3 mt-3">
-            <Button variant="warning" onClick={vaciarCarrito}>Vaciar carrito</Button>
-            <Button variant="primary" onClick={pagar}>Pagar</Button>
+            <Button variant="warning" onClick={vaciarCarrito}>
+              Vaciar carrito
+            </Button>
+            <Button variant="primary" onClick={pagar}>
+              Pagar
+            </Button>
           </div>
         </>
       )}
