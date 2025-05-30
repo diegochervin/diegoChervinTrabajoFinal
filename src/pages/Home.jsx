@@ -4,9 +4,9 @@ import Perfumes from "./Perfumes";
 
 const Home = () => {
   return (
-    <Container >
+    
       <Perfumes />
-    </Container>
+    
   );
 };
 
