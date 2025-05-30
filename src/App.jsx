@@ -9,6 +9,7 @@ import Desodorante from "./pages/Desodorante";
 import BarraProductos from "./components/BarraProductos";
 import Carrito from "./pages/Carrito";
 
+
 function App() {
   return (
     <Router>
@@ -16,6 +17,7 @@ function App() {
         <Header />
         <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
           <BarraProductos />
+          
         </div>
         <Routes>
           <Route path="/" element={<Home />} />

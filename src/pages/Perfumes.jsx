@@ -1,11 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import CardProducto from "../components/CardProducto";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import AsideFiltros from "../components/AsideFiltros";
+import { filtrarProductos } from "../util/filtrarProductos";
 
 function Perfume() {
   const [perfumes, setPerfume] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Estados para filtros
+    const [busqueda, setBusqueda] = useState("");
+    const [filtroMarca, setFiltroMarca] = useState("");
+    const [filtroStock, setFiltroStock] = useState("");
+    const [orden, setOrden] = useState("");
+  
+    // Obtener marcas únicas
+    const marcas = useMemo(() => {
+      const todas = perfumes.map((b) => b.marca);
+      return [...new Set(todas)].sort();
+    }, [perfumes]);
+  
+    // Filtrar productos
+    const productosFiltrados = useMemo(
+    () =>
+      filtrarProductos(perfumes, {
+        busqueda,
+        filtroMarca,
+        filtroStock,
+        orden,
+      }),
+    [perfumes, busqueda, filtroMarca, filtroStock, orden]
+  );
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +46,7 @@ function Perfume() {
         const normalizados = data.map((d) => ({
           id: `${tipo}-${d.id}`,
           marca: d.marca,
-          nombre: d.nombre,
+          nombre: d.nombre.toUpperCase(),
           precio: d.precio,
           foto: d.foto,
           stock: d.stock ?? "",
@@ -49,12 +76,29 @@ function Perfume() {
           <Spinner animation="border" variant="primary" />
         </div>
       ) : (
-        <Row className="g-4">
-          {perfumes.map((producto) => (
-            <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-              <CardProducto producto={producto} />
-            </Col>
-          ))}
+        <Row>
+          <Col xs={12} md={3}>
+            <AsideFiltros
+              marcas={marcas}
+              busqueda={busqueda}
+              setBusqueda={setBusqueda}
+              filtroMarca={filtroMarca}
+              setFiltroMarca={setFiltroMarca}
+              filtroStock={filtroStock}
+              setFiltroStock={setFiltroStock}
+              orden={orden}
+              setOrden={setOrden}
+            />
+          </Col>
+          <Col xs={12} md={9}>
+            <Row className="g-4">
+             {Array.isArray(productosFiltrados) && productosFiltrados.map((producto) => (
+  <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+    <CardProducto producto={producto} />
+  </Col>
+))}
+            </Row>
+          </Col>
         </Row>
       )}
     </Container>

@@ -37,8 +37,10 @@ const CardProducto = ({ producto }) => {
         />
       </div>
 
-      <Card.Body className="d-flex flex-column">
-        <Card.Title>{nombre}</Card.Title>
+      <Card.Body className="d-flex flex-column" style={{ minHeight: "260px" }}>
+        <Card.Title style={{ textTransform: "uppercase", fontWeight: "bold", minHeight: "48px" }}>
+  {nombre}
+</Card.Title>
         <Card.Text className="text-muted">{marca}</Card.Text>
         <Card.Text className="fw-bold text-primary">U$S {precio}</Card.Text>
         {clon && <Card.Text className="text-secondary">Clon: {clon}</Card.Text>}
