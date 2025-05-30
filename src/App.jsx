@@ -8,10 +8,15 @@ import Login from "./pages/Login";
 import Desodorante from "./pages/Desodorante";
 import BarraProductos from "./components/BarraProductos";
 import Carrito from "./pages/Carrito";
+import ProductoCompleto from "./pages/ProductoCompleto";
+import { ProductoProvider } from "./context/ProductoContext";
 
 
 function App() {
   return (
+   <ProductoProvider>
+  
+
     <Router>
       <div>
         <Header />
@@ -26,10 +31,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/desodorante" element={<Desodorante />} />
+          <Route path="/producto/:id" element={<ProductoCompleto />} />
         </Routes>
         <Footer />
       </div>
     </Router>
+    </ProductoProvider>
   );
 }
 

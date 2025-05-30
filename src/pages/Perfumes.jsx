@@ -3,10 +3,13 @@ import CardProducto from "../components/CardProducto";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
+import { useProductos } from "../context/ProductoContext";
+
 
 function Perfume() {
   const [perfumes, setPerfume] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { setProductos } = useProductos();
 
   // Estados para filtros
     const [busqueda, setBusqueda] = useState("");
@@ -56,6 +59,7 @@ function Perfume() {
           tipo: d.tipo,
         }));
         setPerfume(normalizados);
+        setProductos(normalizados);
       } finally {
         setLoading(false);
       }
@@ -103,6 +107,7 @@ function Perfume() {
       )}
     </Container>
   );
+
 }
 
 export default Perfume;

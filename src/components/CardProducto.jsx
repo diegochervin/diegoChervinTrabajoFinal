@@ -2,11 +2,16 @@ import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { agregarAlCarrito, obtenerCarrito } from "../util/carritoUtils";
+import { useNavigate } from "react-router-dom";
 
 const CardProducto = ({ producto }) => {
   const { id, marca, nombre, tamano, clon, foto, stock, precio, color, tipo } =
     producto;
   const [cantidad, setCantidad] = useState(1);
+  const Navigate = useNavigate();
+  const handleVerDetalle = () => {
+    Navigate(`/producto/${producto.id}`);
+  };
 
   const handleAgregarAlCarrito = () => {
     if (cantidad > 0 && cantidad <= producto.stock) {
@@ -49,7 +54,9 @@ const CardProducto = ({ producto }) => {
           <Card.Text className="text-warning">Tamaño: {tamano}</Card.Text>
         )}
         {color && <Card.Text className="text-info">Color: {color}</Card.Text>}
-
+        <Button variant="secondary" onClick={handleVerDetalle}>
+          Ver detalle
+        </Button>
         <div className="d-flex align-items-center gap-2 mb-2">
           <h3 className="mb-0" style={{ fontSize: "1.1rem" }}>
             Cantidad:{" "}
