@@ -5,7 +5,7 @@ import { agregarAlCarrito, obtenerCarrito } from "../util/carritoUtils";
 import { useNavigate } from "react-router-dom";
 
 const CardProducto = ({ producto }) => {
-  const { id, marca, nombre, tamano, clon, foto, stock, precio, color, tipo } =
+  const { id, marca, nombre, tamano, clon, foto, stock, precio } =
     producto;
   const [cantidad, setCantidad] = useState(1);
   const Navigate = useNavigate();
@@ -53,7 +53,7 @@ const CardProducto = ({ producto }) => {
         {tamano && (
           <Card.Text className="text-warning">Tamaño: {tamano}</Card.Text>
         )}
-        {color && <Card.Text className="text-info">Color: {color}</Card.Text>}
+        
         <Button variant="secondary" onClick={handleVerDetalle}>
           Ver detalle
         </Button>

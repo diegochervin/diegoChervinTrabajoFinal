@@ -54,9 +54,9 @@ function Perfume() {
           foto: d.foto,
           stock: d.stock ?? "",
           tamano: d.tamano ?? "",
-          clon: d.clon ?? "",
-          color: d.color ?? "",
+          clon: d.clon ?? null,
           tipo: d.tipo,
+           descripcion: d.descripcion ?? ""
         }));
         setPerfume(normalizados);
         setProductos(normalizados);

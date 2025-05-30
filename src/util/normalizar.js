@@ -16,3 +16,20 @@ export const normalizarTexto = (texto) => {
   export const normalizarProductos = (productos) =>
     productos.map((producto) => normalizarProducto(producto));
   
+  export const etiquetasAmigables = {
+  tamano: "Tamaño",
+  descripcion: "Descripción",
+  precio: "Precio",
+  marca: "Marca",
+  stock: "Stock",
+  clon: "Clon",
+  color: "Color",
+  tipo: "Tipo",
+  foto: "Foto",
+  nombre: "Nombre",
+  modelo: "Modelo",
+  id: "ID",
+  categoria: "Categoría",
+  genero: "Género",
+  fragancia: "Fragancia",
+};
