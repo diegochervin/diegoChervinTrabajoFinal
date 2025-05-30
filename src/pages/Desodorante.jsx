@@ -3,11 +3,13 @@ import CardProducto from "../components/CardProducto";
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
+import { useProductos } from "../context/ProductoContext";
+
 
 function Desodorante() {
   const [desodorantes, setDesodorante] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { setProductos } = useProductos();
   // Estados para filtros
   const [busqueda, setBusqueda] = useState("");
   const [filtroMarca, setFiltroMarca] = useState("");
@@ -54,6 +56,7 @@ function Desodorante() {
           tipo: d.TIPO,
         }));
         setDesodorante(normalizados);
+        setProductos(normalizados);
       } finally {
         setLoading(false);
       }

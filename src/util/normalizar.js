@@ -1,5 +1,5 @@
 // Normaliza una sola propiedad de texto (capitaliza y limpia espacios)
-const normalizarTexto = (texto) => {
+export const normalizarTexto = (texto) => {
     if (!texto || typeof texto !== "string") return "";
     const limpio = texto.trim().toLowerCase();
     return limpio.charAt(0).toUpperCase() + limpio.slice(1);
