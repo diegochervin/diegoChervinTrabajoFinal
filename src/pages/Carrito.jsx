@@ -92,7 +92,7 @@ function Carrito() {
                         src={item.foto}
                         alt={item.nombre}
                         className="rounded"
-                        style={{ width: 60, height: 60, objectFit: "cover" }}
+                        style={{ width: 60, height: 60, objectFit: "fit-content" }}
                       />
                     </td>
                     <td>{item.nombre}</td>

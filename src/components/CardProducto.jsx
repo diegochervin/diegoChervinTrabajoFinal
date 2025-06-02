@@ -48,17 +48,17 @@ const CardProducto = ({ producto }) => {
         </Card.Title>
         <Card.Text className="text-muted">{marca}</Card.Text>
         <Card.Text className="fw-bold text-primary">U$S {precio}</Card.Text>
-        {clon && <Card.Text className="text-secondary">Clon: {clon}</Card.Text>}
+        {/* {clon && <Card.Text className="text-secondary">Clon: {clon}</Card.Text>} */}
         <Card.Text className="text-warning">Stock: {stock}</Card.Text>
-        {tamano && (
+        {/* {tamano && (
           <Card.Text className="text-warning">Tamaño: {tamano}</Card.Text>
         )}
-        
-        <Button variant="secondary" onClick={handleVerDetalle}>
+         */}
+        <Button variant="secondary" className="mb-2" onClick={handleVerDetalle}>
           Ver detalle
         </Button>
         <div className="d-flex align-items-center gap-2 mb-2">
-          <h3 className="mb-0" style={{ fontSize: "1.1rem" }}>
+          <h3 className="mb-0 width: 3em" style={{ fontSize: "1rem" }}>
             Cantidad:{" "}
           </h3>
           <input
@@ -67,7 +67,7 @@ const CardProducto = ({ producto }) => {
             max={producto.stock}
             value={cantidad}
             onChange={(e) => setCantidad(Number(e.target.value))}
-            className="flex-grow-1"
+            className=" "
             style={{
               borderRadius: "10px",
               padding: "0.375rem 0.75rem",
