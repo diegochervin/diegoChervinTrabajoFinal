@@ -3,7 +3,9 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function RutaPrivadaAdmin({ children }) {
-  const { user } = useAuth();
+  const { user, loadingUser } = useAuth();
+
+  if (loadingUser) return null; // o un spinner
 
   if (!user) return <Navigate to="/login" replace />;
   if (user.email !== "admin@1") return <Navigate to="/" replace />;

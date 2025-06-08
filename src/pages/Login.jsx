@@ -59,6 +59,10 @@ function Login() {
           </Form>
         </Card.Body>
       </Card>
+      <li>
+      <ul><h3>Email: admin@1</h3> </ul>
+      <ul><h3>Pass: 1234</h3></ul>
+      </li>
     </Container>
   );
 }

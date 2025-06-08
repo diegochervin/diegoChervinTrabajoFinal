@@ -51,10 +51,10 @@ const Header = () => {
             <Nav.Link as={Link} to="/Contact">
               Contacto
             </Nav.Link>
-            {user ? (
+            {user && user.email ? (
               <>
                 <Navbar.Text className="text-white me-3">
-                  Bienvenido, {user}
+                  Bienvenido, {user.email}
                 </Navbar.Text>
                 <Nav.Link onClick={logout}>Cerrar sesión</Nav.Link>
               </>

@@ -1,9 +1,9 @@
 import { Table, Button, Spinner, Container, Row, Col, Form } from 'react-bootstrap';
-import { useState, useEffect, useMemo, useNavigate } from "react";
+import { useState, useEffect, useMemo } from "react";
 import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
 import { useAuth } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 
 function ListaProductos() {
   const [listaProductos, setListaProductos] = useState([]);

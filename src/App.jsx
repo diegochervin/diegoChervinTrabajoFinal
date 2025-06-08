@@ -18,33 +18,33 @@ import RutaPrivadaAdmin from "./components/RutaPrivadaAdmin";
 
 function App() {
   return (
-   <ProductoProvider>
-  
-<AuthProvider>
     <Router>
-      <div>
-        <Header />
-        <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
-          <BarraProductos />
-          
-        </div>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/carrito" element={<Carrito />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/desodorante" element={<Desodorante />} />
-          <Route path="/producto/:id" element={<ProductoCompleto />} />
-          <Route path="/editproductos" element={<RutaPrivadaAdmin>  <ListaProductos />  </RutaPrivadaAdmin> }/>
-
-        </Routes>
-        <Footer />
-      </div>
+      <ProductoProvider>
+        <AuthProvider>
+          <div>
+            <Header />
+            <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
+              <BarraProductos />
+            </div>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/carrito" element={<Carrito />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/desodorante" element={<Desodorante />} />
+              <Route path="/producto/:id" element={<ProductoCompleto />} />
+              <Route path="/editproductos" element={
+                <RutaPrivadaAdmin>
+                  <ListaProductos />
+                </RutaPrivadaAdmin>
+              }/>
+            </Routes>
+            <Footer />
+          </div>
+        </AuthProvider>
+      </ProductoProvider>
     </Router>
-    </AuthProvider>
-    </ProductoProvider>
-    
   );
 }
 
