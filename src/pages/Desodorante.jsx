@@ -5,12 +5,11 @@ import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
 import { useProductos } from "../context/ProductoContext";
 
-
 function Desodorante() {
   const [desodorantes, setDesodorante] = useState([]);
   const [loading, setLoading] = useState(true);
   const { setProductos } = useProductos();
-  // Estados para filtros
+
   const [busqueda, setBusqueda] = useState("");
   const [filtroMarca, setFiltroMarca] = useState("");
   const [filtroStock, setFiltroStock] = useState("");
@@ -24,39 +23,45 @@ function Desodorante() {
 
   // Filtrar productos
   const productosFiltrados = useMemo(
-  () =>
-    filtrarProductos(desodorantes, {
-      busqueda,
-      filtroMarca,
-      filtroStock,
-      orden,
-    }),
-  [desodorantes, busqueda, filtroMarca, filtroStock, orden]
-);
-  
+    () =>
+      filtrarProductos(desodorantes, {
+        busqueda,
+        filtroMarca,
+        filtroStock,
+        orden,
+      }),
+    [desodorantes, busqueda, filtroMarca, filtroStock, orden]
+  );
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://etherealparfums.netlify.app/desodorante.json"
+          "https://etherealparfums.netlify.app/productos_combinados.json"
         );
         const data = await response.json();
-        // Normalizar los datos para que coincidan con CardProducto
-        const tipo = "desodorante";
-        const normalizados = data.map((d) => ({
-          id: `${tipo}-${d.ID}`,
-          marca: d.MARCA,
-          nombre: d.MODELO,
-          precio: d.PRECIO,
-          foto: d.FOTO,
-          stock: d.STOCK ?? "10",
-          tamano: d.TAMANO ?? "",
-          clon: d.CLON ?? "",
-          color: d.COLOR ?? "",
-          tipo: d.TIPO,
+
+        const desodorantesFiltrados = data.filter(
+          (d) => d.tipo.toLowerCase() === "desodorante"
+        );
+
+        const normalizados = desodorantesFiltrados.map((d) => ({
+          id: `${d.id}`,
+          marca: d.marca,
+          nombre: d.modelo.toUpperCase(),
+          precio: d.precio,
+          foto: d.foto,
+          stock: d.stock ?? "10",
+          tamano: d.tamano ?? "",
+          clon: d.clon ?? "",
+          color: d.color ?? "",
+          tipo: d.tipo,
         }));
+
         setDesodorante(normalizados);
         setProductos(normalizados);
+      } catch (error) {
+        console.error("Error al cargar productos:", error);
       } finally {
         setLoading(false);
       }
@@ -93,11 +98,12 @@ function Desodorante() {
           </Col>
           <Col xs={12} md={9}>
             <Row className="g-4">
-             {Array.isArray(productosFiltrados) && productosFiltrados.map((producto) => (
-  <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-    <CardProducto producto={producto} />
-  </Col>
-))}
+              {Array.isArray(productosFiltrados) &&
+                productosFiltrados.map((producto) => (
+                  <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+                    <CardProducto producto={producto} />
+                  </Col>
+                ))}
             </Row>
           </Col>
         </Row>

@@ -1,6 +1,5 @@
-import React from "react";
-import { Accordion } from "react-bootstrap";
 
+import { Accordion } from "react-bootstrap";
 const AsideFiltros = ({
   marcas,
   busqueda,
@@ -11,9 +10,13 @@ const AsideFiltros = ({
   setFiltroStock,
   orden,
   setOrden,
+  tipos = [], 
+  filtroTipo, 
+  setFiltroTipo, 
 }) => (
   <aside className="p-3 border-end d-flex flex-column" style={{ width: "320px", gap: "1rem", minWidth: "260px", maxWidth: "320px"}}>
     <h4 className="mb-3">🔎 Filtros</h4>
+
     <div>
       <label htmlFor="buscar" className="form-label">
         Buscar por marca o modelo
@@ -27,6 +30,47 @@ const AsideFiltros = ({
         placeholder="Ej: Erba Pura..."
       />
     </div>
+
+    {tipos && filtroTipo !== undefined && setFiltroTipo && (
+  <Accordion>
+    <Accordion.Item eventKey="tipo">
+      <Accordion.Header>Filtrar por Tipo</Accordion.Header>
+      <Accordion.Body>
+        <div className="form-check">
+          <input
+            type="radio"
+            className="form-check-input"
+            name="filtroTipo"
+            id="tipoTodos"
+            value=""
+            checked={filtroTipo === ""}
+            onChange={(e) => setFiltroTipo(e.target.value)}
+          />
+          <label htmlFor="tipoTodos" className="form-check-label">
+            Todos
+          </label>
+        </div>
+        {tipos.map((tipo, idx) => (
+          <div className="form-check" key={idx}>
+            <input
+              type="radio"
+              className="form-check-input"
+              name="filtroTipo"
+              id={`tipo-${idx}`}
+              value={tipo}
+              checked={filtroTipo === tipo}
+              onChange={(e) => setFiltroTipo(e.target.value)}
+            />
+            <label htmlFor={`tipo-${idx}`} className="form-check-label">
+              {tipo}
+            </label>
+          </div>
+        ))}
+      </Accordion.Body>
+    </Accordion.Item>
+  </Accordion>
+)}
+
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header>Filtrar por Marca</Accordion.Header>
@@ -63,6 +107,7 @@ const AsideFiltros = ({
           ))}
         </Accordion.Body>
       </Accordion.Item>
+
       <Accordion.Item eventKey="1">
         <Accordion.Header>Ordenar por</Accordion.Header>
         <Accordion.Body>
@@ -92,6 +137,7 @@ const AsideFiltros = ({
           )}
         </Accordion.Body>
       </Accordion.Item>
+
       <Accordion.Item eventKey="2">
         <Accordion.Header>Stock</Accordion.Header>
         <Accordion.Body>

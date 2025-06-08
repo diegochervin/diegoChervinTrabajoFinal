@@ -10,6 +10,7 @@ import BarraProductos from "./components/BarraProductos";
 import Carrito from "./pages/Carrito";
 import ProductoCompleto from "./pages/ProductoCompleto";
 import { ProductoProvider } from "./context/ProductoContext";
+import ListaProductos from "./pages/ListaProductos";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/desodorante" element={<Desodorante />} />
           <Route path="/producto/:id" element={<ProductoCompleto />} />
+          <Route path="/editproductos" element={<ListaProductos />} />
         </Routes>
         <Footer />
       </div>

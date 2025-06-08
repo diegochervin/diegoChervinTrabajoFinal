@@ -41,15 +41,21 @@ function Perfume() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://etherealparfums.netlify.app/producto.json"
+          "https://etherealparfums.netlify.app/productos_combinados.json"
         );
         const data = await response.json();
-        // Normalizar los datos para que coincidan con CardProducto
-        const tipo = "perfume";
-        const normalizados = data.map((d) => ({
-          id: `${tipo}-${d.id}`,
+        
+        const perfumesFiltrados = data.filter(
+          (d) => d.tipo.toLowerCase() === "perfume"
+        );
+
+
+
+
+        const normalizados = perfumesFiltrados.map((d) => ({
+          id: `${d.id}`,
           marca: d.marca,
-          nombre: d.nombre.toUpperCase(),
+          nombre: d.nombre.toUpperCase() ||  d.modelo.toUpperCase(),
           precio: d.precio,
           foto: d.foto,
           stock: d.stock ?? "",
