@@ -5,9 +5,11 @@ import logo from "../img/logo.jpeg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { obtenerCantidadTotal } from "../util/carritoUtils";
+import CotizacionDolar from "./CotizacionDolar";
 
 const Header = () => {
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
+  const [cotizacionDolar, setCotizacionDolar] = useState(null);
   useEffect(() => {
     setCantidadCarrito(obtenerCantidadTotal());
 
@@ -36,7 +38,14 @@ const Header = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+           <Nav className="ms-auto align-items-center">
+            <Navbar.Text className="text-white me-3">
+              {cotizacionDolar && (
+                <>U$S 1 = ${cotizacionDolar.toLocaleString()}</>
+              )}
+            </Navbar.Text>
+
+            <CotizacionDolar onCotizacion={setCotizacionDolar} />
             <Nav.Link as={Link} to="/Contact">
               Contacto
             </Nav.Link>

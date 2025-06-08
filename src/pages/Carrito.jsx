@@ -5,9 +5,11 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CotizacionDolar from "../components/CotizacionDolar";
 
 function Carrito() {
   const [carrito, setCarrito] = useState(() => obtenerCarrito());
+  const [cotizacion, setCotizacion] = useState(null);
 
   const actualizarCarrito = (nuevo) => {
     guardarCarrito(nuevo);
@@ -65,6 +67,7 @@ function Carrito() {
   );
 
   return (
+    
     <Container className="mt-5">
       <h1 className="text-center mb-4">Tu carrito</h1>
 
@@ -72,6 +75,7 @@ function Carrito() {
         <p className="text-center">Tu carrito está vacío</p>
       ) : (
         <>
+        <CotizacionDolar onCotizacion={setCotizacion} />
           <div className="table-responsive">
             <table className="table table-striped table-bordered align-middle text-center">
               <thead className="table-dark">
@@ -147,10 +151,15 @@ function Carrito() {
           </div>
 
           <hr />
-          <h3 className="text-end text-success fw-bold">
-            Total a pagar: ${totalCarrito.toLocaleString()}
+            <h3 className="text-end text-success fw-bold">
+            Total a pagar: U$S {totalCarrito.toLocaleString()}
           </h3>
+            {cotizacion && (
+    <h3 className="text-end text-primary fw-bold">
+  Total en pesos: $ {Math.round(totalCarrito * cotizacion).toLocaleString()}
+</h3>
 
+  )}
           <div className="d-flex justify-content-end gap-3 mt-3">
             <Button variant="warning" onClick={vaciarCarrito}>
               Vaciar carrito
