@@ -11,13 +11,16 @@ import Carrito from "./pages/Carrito";
 import ProductoCompleto from "./pages/ProductoCompleto";
 import { ProductoProvider } from "./context/ProductoContext";
 import ListaProductos from "./pages/ListaProductos";
+import { AuthProvider } from "./context/AuthContext";
+import RutaPrivadaAdmin from "./components/RutaPrivadaAdmin";
+
 
 
 function App() {
   return (
    <ProductoProvider>
   
-
+<AuthProvider>
     <Router>
       <div>
         <Header />
@@ -33,12 +36,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/desodorante" element={<Desodorante />} />
           <Route path="/producto/:id" element={<ProductoCompleto />} />
-          <Route path="/editproductos" element={<ListaProductos />} />
+          <Route path="/editproductos" element={<RutaPrivadaAdmin>  <ListaProductos />  </RutaPrivadaAdmin> }/>
+
         </Routes>
         <Footer />
       </div>
     </Router>
+    </AuthProvider>
     </ProductoProvider>
+    
   );
 }
 

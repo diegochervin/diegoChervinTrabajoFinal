@@ -1,7 +1,9 @@
 import { Table, Button, Spinner, Container, Row, Col, Form } from 'react-bootstrap';
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useNavigate } from "react";
 import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
+import { useAuth } from "../context/AuthContext";
+
 
 function ListaProductos() {
   const [listaProductos, setListaProductos] = useState([]);
@@ -13,6 +15,15 @@ function ListaProductos() {
   const [filtroTipo, setFiltroTipo] = useState("");
   const [productoEditandoId, setProductoEditandoId] = useState(null);
   const [copiaProductos, setCopiaProductos] = useState([]);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => 
+    {
+    logout();
+    navigate("/");
+  };
 
   const marcas = useMemo(() => {
     const todas = listaProductos.map((p) => p.marca);

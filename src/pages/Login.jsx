@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Login attempt with:", { email, password });
+    const sucess = login(email, password);
+    if (sucess) {
+      navigate("/");
+    }
+    else {
+    setError("Credenciales incorrectas. Inténtalo de nuevo.");
+    }
   };
 
   return (

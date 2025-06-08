@@ -6,10 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { obtenerCantidadTotal } from "../util/carritoUtils";
 import CotizacionDolar from "./CotizacionDolar";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
   const [cotizacionDolar, setCotizacionDolar] = useState(null);
+  const { user, logout } = useAuth();
   useEffect(() => {
     setCantidadCarrito(obtenerCantidadTotal());
 
@@ -38,7 +40,7 @@ const Header = () => {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-           <Nav className="ms-auto align-items-center">
+          <Nav className="ms-auto align-items-center">
             <Navbar.Text className="text-white me-3">
               {cotizacionDolar && (
                 <>U$S 1 = ${cotizacionDolar.toLocaleString()}</>
@@ -49,12 +51,23 @@ const Header = () => {
             <Nav.Link as={Link} to="/Contact">
               Contacto
             </Nav.Link>
-            <Nav.Link as={Link} to="/Login">
-              Iniciar Sesion
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Registrate
-            </Nav.Link>
+            {user ? (
+              <>
+                <Navbar.Text className="text-white me-3">
+                  Bienvenido, {user}
+                </Navbar.Text>
+                <Nav.Link onClick={logout}>Cerrar sesión</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/Login">
+                  Iniciar Sesión
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Registrate
+                </Nav.Link>
+              </>
+            )}
             <Nav.Link
               as={Link}
               to="/carrito"
