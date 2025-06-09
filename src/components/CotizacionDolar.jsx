@@ -13,16 +13,16 @@ function CotizacionDolar({ onCotizacion }) {
         const data = await response.json();
         const dolarVenta = Number(data.venta);
         setCotizacion(dolarVenta);
-        onCotizacion(dolarVenta); // 💡 Notificar al componente padre
+        onCotizacion(dolarVenta); 
       } catch (error) {
         console.error('Error al obtener la cotización del dólar:', error);
       }
     };
 
     fetchCotizacion();
-  }, [onCotizacion]); // Solo se ejecuta una vez al montar
+  }, [onCotizacion]);
 
-  return null; // No renderiza nada visualmente
+  return null; 
 }
 
 export default CotizacionDolar;

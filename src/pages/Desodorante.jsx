@@ -15,13 +15,13 @@ function Desodorante() {
   const [filtroStock, setFiltroStock] = useState("");
   const [orden, setOrden] = useState("");
 
-  // Obtener marcas únicas
+  
   const marcas = useMemo(() => {
     const todas = desodorantes.map((b) => b.marca);
     return [...new Set(todas)].sort();
   }, [desodorantes]);
 
-  // Filtrar productos
+
   const productosFiltrados = useMemo(
     () =>
       filtrarProductos(desodorantes, {

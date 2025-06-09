@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Form,
-  Button,
-  Card,
-  Row,
-  Col,
-  InputGroup,
-} from "react-bootstrap";
+import { Container, Form, Button, Card, Row, Col, InputGroup,} from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import registro from "../img/registro.webp";
 

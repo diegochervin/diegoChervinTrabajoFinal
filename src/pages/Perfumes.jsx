@@ -11,19 +11,19 @@ function Perfume() {
   const [loading, setLoading] = useState(true);
   const { setProductos } = useProductos();
 
-  // Estados para filtros
+  
     const [busqueda, setBusqueda] = useState("");
     const [filtroMarca, setFiltroMarca] = useState("");
     const [filtroStock, setFiltroStock] = useState("");
     const [orden, setOrden] = useState("");
   
-    // Obtener marcas únicas
+
     const marcas = useMemo(() => {
       const todas = perfumes.map((b) => b.marca);
       return [...new Set(todas)].sort();
     }, [perfumes]);
   
-    // Filtrar productos
+  
     const productosFiltrados = useMemo(
     () =>
       filtrarProductos(perfumes, {

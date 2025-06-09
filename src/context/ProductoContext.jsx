@@ -1,4 +1,4 @@
-// context/ProductoContext.jsx
+
 import { createContext, useContext, useState } from "react";
 
 const ProductoContext = createContext();
