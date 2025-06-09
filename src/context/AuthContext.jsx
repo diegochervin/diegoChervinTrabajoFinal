@@ -9,18 +9,16 @@ export function AuthProvider({ children }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loadingUser, setLoadingUser] = useState(true); // NUEVO
-  const navigate = useNavigate();
+  const [loadingUser, setLoadingUser] = useState(true); 
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
-    const savedUser = JSON.parse(localStorage.getItem("user")); // importante
-
+    const savedUser = JSON.parse(localStorage.getItem("user")); 
     if (savedToken && savedUser) {
       setToken(savedToken);
       setUser(savedUser);
     }
-    setLoadingUser(false); // NUEVO
+    setLoadingUser(false); 
   }, []);
 
   useEffect(() => {
