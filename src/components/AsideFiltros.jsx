@@ -1,4 +1,3 @@
-
 import { Accordion } from "react-bootstrap";
 const AsideFiltros = ({
   marcas,
@@ -111,7 +110,7 @@ const AsideFiltros = ({
       <Accordion.Item eventKey="1">
         <Accordion.Header>Ordenar por</Accordion.Header>
         <Accordion.Body>
-          {["alfabetoAZ", "alfabetoZA", "preciomenor", "preciomayor"].map(
+          {["alfabetoAZ", "alfabetoZA", "precioAsc", "precioDesc"].map(
             (value, idx) => (
               <div className="form-check" key={idx}>
                 <input
@@ -128,7 +127,7 @@ const AsideFiltros = ({
                     ? "A-Z"
                     : value === "alfabetoZA"
                     ? "Z-A"
-                    : value === "preciomenor"
+                    : value === "precioAsc"
                     ? "Precio Menor a Mayor"
                     : "Precio Mayor a Menor"}
                 </label>
@@ -161,12 +160,26 @@ const AsideFiltros = ({
               className="form-check-input"
               name="filtroStock"
               id="stockDisponible"
-              value="S"
-              checked={filtroStock === "S"}
+              value="conStock"
+              checked={filtroStock === "conStock"}
               onChange={(e) => setFiltroStock(e.target.value)}
             />
             <label htmlFor="stockDisponible" className="form-check-label">
               Solo con stock
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              type="radio"
+              className="form-check-input"
+              name="filtroStock"
+              id="stockSin"
+              value="sinStock"
+              checked={filtroStock === "sinStock"}
+              onChange={(e) => setFiltroStock(e.target.value)}
+            />
+            <label htmlFor="stockSin" className="form-check-label">
+              Sin stock
             </label>
           </div>
         </Accordion.Body>
