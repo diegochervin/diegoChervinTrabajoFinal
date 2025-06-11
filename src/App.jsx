@@ -13,8 +13,8 @@ import { ProductoProvider } from "./context/ProductoContext";
 import ListaProductos from "./pages/ListaProductos";
 import { AuthProvider } from "./context/AuthContext";
 import RutaPrivadaAdmin from "./components/RutaPrivadaAdmin";
-
-
+import BannerInicio from "./components/BannerInicio";
+import CarrouselMarcas from "./components/CarrouselMarcas";
 
 function App() {
   return (
@@ -23,6 +23,8 @@ function App() {
         <AuthProvider>
           <div>
             <Header />
+            <BannerInicio />
+            
             <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
               <BarraProductos />
             </div>
@@ -40,6 +42,7 @@ function App() {
                 </RutaPrivadaAdmin>
               }/>
             </Routes>
+            <CarrouselMarcas />
             <Footer />
           </div>
         </AuthProvider>
