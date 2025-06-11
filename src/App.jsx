@@ -25,8 +25,7 @@ function App() {
         <AuthProvider>
           <div>
             <Header />
-            
-            
+                       
             <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
               <BarraProductos />
             </div>
