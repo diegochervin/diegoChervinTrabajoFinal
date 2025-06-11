@@ -5,7 +5,7 @@ function BannerInicio() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "10vh",
+        height: "20vh",
         background: "#fff",
         width: "100vw",
         overflow: "hidden",
