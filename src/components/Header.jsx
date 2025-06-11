@@ -31,7 +31,7 @@ const Header = () => {
           className="d-flex align-items-center text-decoration-none text-white"
         >
           <img
-            src="/logo.jpeg"
+            src="/img/logo.jpeg"
             alt="logo"
             style={{ height: "100%", maxHeight: "50px", objectFit: "contain" }}
           />
