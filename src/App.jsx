@@ -15,6 +15,8 @@ import { AuthProvider } from "./context/AuthContext";
 import RutaPrivadaAdmin from "./components/RutaPrivadaAdmin";
 import BannerInicio from "./components/BannerInicio";
 import CarrouselMarcas from "./components/CarrouselMarcas";
+import Perfumes from "./pages/Perfumes";
+
 
 function App() {
   return (
@@ -23,13 +25,14 @@ function App() {
         <AuthProvider>
           <div>
             <Header />
-            <BannerInicio />
+            
             
             <div className="bg-dark py-2 px-3flex-row justify-content-center gap-4">
               <BarraProductos />
             </div>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/perfumes" element={<Perfumes />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/carrito" element={<Carrito />} />
               <Route path="/login" element={<Login />} />

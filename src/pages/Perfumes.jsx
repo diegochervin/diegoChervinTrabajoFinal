@@ -5,26 +5,22 @@ import AsideFiltros from "../components/AsideFiltros";
 import { filtrarProductos } from "../util/filtrarProductos";
 import { useProductos } from "../context/ProductoContext";
 
-
 function Perfume() {
   const [perfumes, setPerfume] = useState([]);
   const [loading, setLoading] = useState(true);
   const { setProductos } = useProductos();
 
-  
-    const [busqueda, setBusqueda] = useState("");
-    const [filtroMarca, setFiltroMarca] = useState("");
-    const [filtroStock, setFiltroStock] = useState("");
-    const [orden, setOrden] = useState("");
-  
+  const [busqueda, setBusqueda] = useState("");
+  const [filtroMarca, setFiltroMarca] = useState("");
+  const [filtroStock, setFiltroStock] = useState("");
+  const [orden, setOrden] = useState("");
 
-    const marcas = useMemo(() => {
-      const todas = perfumes.map((b) => b.marca);
-      return [...new Set(todas)].sort();
-    }, [perfumes]);
-  
-  
-    const productosFiltrados = useMemo(
+  const marcas = useMemo(() => {
+    const todas = perfumes.map((b) => b.marca);
+    return [...new Set(todas)].sort();
+  }, [perfumes]);
+
+  const productosFiltrados = useMemo(
     () =>
       filtrarProductos(perfumes, {
         busqueda,
@@ -35,8 +31,6 @@ function Perfume() {
     [perfumes, busqueda, filtroMarca, filtroStock, orden]
   );
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,25 +38,22 @@ function Perfume() {
           "https://etherealparfums.netlify.app/productos_combinados.json"
         );
         const data = await response.json();
-        
+
         const perfumesFiltrados = data.filter(
           (d) => d.tipo.toLowerCase() === "perfume"
         );
 
-
-
-
         const normalizados = perfumesFiltrados.map((d) => ({
           id: `${d.id}`,
           marca: d.marca,
-          nombre: d.nombre.toUpperCase() ||  d.modelo.toUpperCase(),
+          nombre: d.nombre.toUpperCase() || d.modelo.toUpperCase(),
           precio: d.precio,
           foto: d.foto,
           stock: d.stock ?? "",
           tamano: d.tamano ?? "",
           clon: d.clon ?? null,
           tipo: d.tipo,
-           descripcion: d.descripcion ?? ""
+          descripcion: d.descripcion ?? "",
         }));
         setPerfume(normalizados);
         setProductos(normalizados);
@@ -102,18 +93,18 @@ function Perfume() {
           </Col>
           <Col xs={12} md={9}>
             <Row className="g-4">
-             {Array.isArray(productosFiltrados) && productosFiltrados.map((producto) => (
-  <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
-    <CardProducto producto={producto} />
-  </Col>
-))}
+              {Array.isArray(productosFiltrados) &&
+                productosFiltrados.map((producto) => (
+                  <Col key={producto.id} xs={12} sm={6} md={4} lg={3} xl={3}>
+                    <CardProducto producto={producto} />
+                  </Col>
+                ))}
             </Row>
           </Col>
         </Row>
       )}
     </Container>
   );
-
 }
 
 export default Perfume;

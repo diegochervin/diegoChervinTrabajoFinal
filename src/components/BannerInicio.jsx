@@ -1,26 +1,31 @@
+import { Link } from "react-router-dom";
+
 function BannerInicio() {
   return (
     <div
       style={{
         width: "100vw",
-        height: "80vh",
-        backgroundColor: "#000", // Fondo neutro si sobran márgenes
+        height: "60vh",
+        backgroundColor: "#000",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
       }}
     >
-      <img
-        src="/img/afnanfebrero.jpg"
-        alt="Banner"
-        style={{
-          maxWidth: "100%",
-          maxHeight: "100%",
-          objectFit: "contain",
-          display: "block",
-        }}
-      />
+      <Link to="/perfumes">
+        <img
+          src="/img/afnanfebrero.jpg"
+          alt="Banner"
+          style={{
+            maxWidth: "100%",
+            maxHeight: "100%",
+            objectFit: "contain",
+            display: "block",
+            cursor: "pointer",
+          }}
+        />
+      </Link>
     </div>
   );
 }
