@@ -2,13 +2,13 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 const logos = [
-  "/src/img/marcas/rave.png",
-  "/src/img/marcas/rasasi.png",
-  "/src/img/marcas/alharamain.png",
-  "/src/img/marcas/maisonalhambra.png",
-  "/src/img/marcas/afnan.png",
-  "/src/img/marcas/lataffa.png",
-  "/src/img/marcas/armaf.png",
+  "/img/marcas/rave.png",
+  "/img/marcas/rasasi.png",
+  "/img/marcas/alharamain.png",
+  "/img/marcas/maisonalhambra.png",
+  "/img/marcas/afnan.png",
+  "/img/marcas/lataffa.png",
+  "/img/marcas/armaf.png",
 ];
 
 const responsive = {

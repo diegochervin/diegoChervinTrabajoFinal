@@ -13,22 +13,22 @@ function BannerInicio() {
       }}
     >
       <img
-        src="/src/img/perfumes1.webp"
+        src="/img/perfumes1.webp"
         alt="Banner 1"
         style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
       />
       <img
-        src="/src/img/perfumes2.webp"
+        src="/img/perfumes2.webp"
         alt="Banner 2"
         style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
       />
       <img
-        src="/src/img/perfumes3.jpg"
+        src="/img/perfumes3.jpg"
         alt="Banner 3"
         style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
       />
       <img
-        src="/src/img/perfumes4.webp"
+        src="/img/perfumes4.webp"
         alt="Banner 4"
         style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
       />

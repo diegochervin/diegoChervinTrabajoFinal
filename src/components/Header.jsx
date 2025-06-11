@@ -1,7 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import logo from "../img/logo.jpeg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { obtenerCantidadTotal } from "../util/carritoUtils";
@@ -32,7 +31,7 @@ const Header = () => {
           className="d-flex align-items-center text-decoration-none text-white"
         >
           <img
-            src={logo}
+            src="/logo.jpeg"
             alt="logo"
             style={{ height: "100%", maxHeight: "50px", objectFit: "contain" }}
           />

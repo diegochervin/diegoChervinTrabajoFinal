@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Card, Row, Col, InputGroup,} from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import registro from "../img/registro.webp";
+
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -133,7 +133,7 @@ function Register() {
                   style={{ minHeight: "400px" }}
                 >
                   <img
-                    src={registro}
+                    src="/img/registro.webp"
                     alt="Foto de registro"
                     className="w-100 h-100"
                     style={{ objectFit: "cover" }}
