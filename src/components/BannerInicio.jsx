@@ -5,7 +5,7 @@ function BannerInicio() {
     <div
       style={{
         width: "100vw",
-        height: "60vh",
+        height: "50vh",
         backgroundColor: "#000",
         display: "flex",
         justifyContent: "center",
