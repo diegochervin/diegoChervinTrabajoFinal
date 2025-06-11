@@ -2,35 +2,24 @@ function BannerInicio() {
   return (
     <div
       style={{
+        width: "100vw",
+        height: "80vh",
+        backgroundColor: "#000", // Fondo neutro si sobran márgenes
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "20vh",
-        background: "#fff",
-        width: "100vw",
         overflow: "hidden",
-        marginLeft: "calc(-50vw + 50%)", 
       }}
     >
       <img
-        src="/img/perfumes1.webp"
-        alt="Banner 1"
-        style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
-      />
-      <img
-        src="/img/perfumes2.webp"
-        alt="Banner 2"
-        style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
-      />
-      <img
-        src="/img/perfumes3.jpg"
-        alt="Banner 3"
-        style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
-      />
-      <img
-        src="/img/perfumes4.webp"
-        alt="Banner 4"
-        style={{ width: "25%", height: "100%", objectFit: "cover", display: "block" }}
+        src="/img/afnanfebrero.jpg"
+        alt="Banner"
+        style={{
+          maxWidth: "100%",
+          maxHeight: "100%",
+          objectFit: "contain",
+          display: "block",
+        }}
       />
     </div>
   );
