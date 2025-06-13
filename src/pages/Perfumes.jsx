@@ -35,7 +35,7 @@ function Perfume() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://etherealparfums.netlify.app/productos_combinados.json"
+          "https://6830550bf504aa3c70f76bd5.mockapi.io/perfume"
         );
         const data = await response.json();
 
