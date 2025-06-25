@@ -11,7 +11,7 @@ function BannerInicio() {
 
     window.addEventListener("resize", handleResize);
 
-    // Limpieza al desmontar el componente
+    
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -20,21 +20,14 @@ function BannerInicio() {
     : "/img/afnanfebrero.jpg";
 
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "53vh",
-        overflow: "hidden",
-      }}
-    >
+    <div style={{ width: "100vw", overflow: "hidden" }}>
       <Link to="/perfumes">
         <img
           src={imageSrc}
           alt="Banner"
           style={{
             width: "100%",
-            height: "100%",
-            objectFit: "cover", 
+            height: "auto",
             display: "block",
             cursor: "pointer",
           }}
