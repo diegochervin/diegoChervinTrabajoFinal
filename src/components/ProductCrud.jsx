@@ -8,37 +8,22 @@ const ProductCRUD = () => {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("create"); 
-  const [currentItem, setCurrentItem] = useState({ name: "", description: "" });
+  const [currentItem, setCurrentItem] = useState({ name: "", description: "", foto: [] });
+  const [foto1, setFoto1] = useState("");
+  const [foto2, setFoto2] = useState("");
+  const [foto3, setFoto3] = useState("");
 
-  // Carga inicial
-  const fetchItems = async () => 
-    {
-
-
-
-    //cambia el estado para la carga inicial
+  const fetchItems = async () => {
     setLoading(true);
-    try 
-    {
-      //Hace una petición HTTP para obtener datos desde la URL API_URL y espera a que termine     
+    try {
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error("Error al obtener items");
-
-      //es un método que convierte el cuerpo de la respuesta (que normalmente está en formato texto JSON) a un objeto JavaScript.
       const data = await res.json();
-
-
-      //Guarda los datos recibidos en el estado o variable que maneja los items  
       setItems(data);
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       alert("Error cargando datos");
       console.error(error);
-    } 
-    //Independientemente de que haya ocurrido un error o no, indica que terminó la carga de datos  
-    finally 
-    {
+    } finally {
       setLoading(false);
     }
   };
@@ -47,20 +32,21 @@ const ProductCRUD = () => {
     fetchItems();
   }, []);
 
-  const handleChange = (e) => 
-    {
+  const handleChange = (e) => {
     setCurrentItem({ ...currentItem, [e.target.name]: e.target.value });
   };
 
-  //Esta función envía un nuevo item a la API usando POST, luego actualiza la lista de items y cierra el modal si todo sale bien. 
-  // Si ocurre un error, muestra una alerta y lo registra en la consola.
-  const handleCreate = async () => 
-    {
+  const construirItemConFotos = () => {
+    const fotos = [foto1, foto2, foto3].filter(f => f.trim() !== "");
+    return { ...currentItem, foto: fotos };
+  };
+
+  const handleCreate = async () => {
     try {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentItem),
+        body: JSON.stringify(construirItemConFotos()),
       });
       if (!res.ok) throw new Error("Error al crear item");
       await fetchItems();
@@ -76,7 +62,7 @@ const ProductCRUD = () => {
       const res = await fetch(`${API_URL}/${currentItem.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentItem),
+        body: JSON.stringify(construirItemConFotos()),
       });
       if (!res.ok) throw new Error("Error al actualizar item");
       await fetchItems();
@@ -102,13 +88,19 @@ const ProductCRUD = () => {
 
   const openCreateModal = () => {
     setModalMode("create");
-    setCurrentItem({ name: "", description: "" });
+    setCurrentItem({ name: "", description: "", foto: [] });
+    setFoto1("");
+    setFoto2("");
+    setFoto3("");
     setShowModal(true);
   };
 
   const openEditModal = (item) => {
     setModalMode("edit");
     setCurrentItem(item);
+    setFoto1(item.foto?.[0] || "");
+    setFoto2(item.foto?.[1] || "");
+    setFoto3(item.foto?.[2] || "");
     setShowModal(true);
   };
 
@@ -118,7 +110,7 @@ const ProductCRUD = () => {
 
   return (
     <Container className="mt-4">
-      <h1>Clase 11 </h1>
+      <h1>Clase 11</h1>
 
       <Button variant="primary" onClick={openCreateModal} className="mb-3">
         Crear nuevo item
@@ -129,26 +121,43 @@ const ProductCRUD = () => {
       ) : (
         <Table striped bordered hover>
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Marca</th>
+    <th>Precio</th>
+    <th>Stock</th>
+    <th>Tipo</th>
+    <th>Fotos</th>  {/* Nueva columna para fotos */}
+    <th>Acciones</th>
+  </tr>
+</thead>
           <tbody>
             {items.length === 0 && (
               <tr>
-                <td colSpan="4" className="text-center">
+                <td colSpan="7" className="text-center">
                   No hay items
                 </td>
               </tr>
             )}
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.description}</td>
+            {items.map(item => (
+    <tr key={item.id}>
+      <td>{item.nombre}</td>
+      <td>{item.marca}</td>
+      <td>${item.precio}</td>
+      <td>{item.stock}</td>
+      <td>{item.tipo}</td>
+      <td>
+        {Array.isArray(item.foto) && item.foto.map((url, idx) =>
+    url ? (
+      <img
+        key={idx}
+        src={url}
+        alt={`Foto ${idx + 1}`}
+        style={{ height: "50px", marginRight: "5px", borderRadius: "4px" }}
+      />
+    ) : null
+  )}
+      </td>
                 <td>
                   <Button
                     variant="warning"
@@ -180,7 +189,7 @@ const ProductCRUD = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="formName">
+            <Form.Group className="mb-3">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
@@ -191,7 +200,7 @@ const ProductCRUD = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formDescription">
+            <Form.Group className="mb-3">
               <Form.Label>Descripción</Form.Label>
               <Form.Control
                 as="textarea"
@@ -202,6 +211,39 @@ const ProductCRUD = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Foto URL 1</Form.Label>
+              <Form.Control
+                type="text"
+                value={foto1}
+                onChange={(e) => setFoto1(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Foto URL 2</Form.Label>
+              <Form.Control
+                type="text"
+                value={foto2}
+                onChange={(e) => setFoto2(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Foto URL 3</Form.Label>
+              <Form.Control
+                type="text"
+                value={foto3}
+                onChange={(e) => setFoto3(e.target.value)}
+              />
+            </Form.Group>
+
+            <div className="mb-3 d-flex">
+              {[foto1, foto2, foto3].map((f, i) =>
+                f ? <img key={i} src={f} alt="preview" height={80} className="me-2" /> : null
+              )}
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
