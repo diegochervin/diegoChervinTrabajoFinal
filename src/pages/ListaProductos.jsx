@@ -1,8 +1,6 @@
 import { Table, Button, Spinner, Container, Form, Modal } from 'react-bootstrap';
-import { useState, useEffect, useMemo } from "react";
-
+import { useState, useEffect } from "react";
 import { filtrarProductos } from "../util/filtrarProductos";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://6830550bf504aa3c70f76bd5.mockapi.io/perfume";
@@ -10,14 +8,9 @@ const API_URL = "https://6830550bf504aa3c70f76bd5.mockapi.io/perfume";
 function ListaProductos() {
   const [listaProductos, setListaProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [busqueda, setBusqueda] = useState("");
   const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroMarca, setFiltroMarca] = useState("");
-  const [filtroStock, setFiltroStock] = useState("");
-  const [orden, setOrden] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("");
-  const [productoEditandoId, setProductoEditandoId] = useState(null);
-  const [copiaProductos, setCopiaProductos] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("create");
   const [currentItem, setCurrentItem] = useState(null);
@@ -33,14 +26,7 @@ function ListaProductos() {
     descripcion: "",
     otros: [],
   });
-  const [nuevoOtro, setNuevoOtro] = useState({ clave: "", valor: "" });
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
 
   const fetchItems = async () => {
     setLoading(true);
@@ -49,21 +35,20 @@ function ListaProductos() {
       if (!response.ok) throw new Error("Error al cargar productos");
       const data = await response.json();
       const normalizados = data.map((d) => ({
-  id: d.id,
-  marca: d.marca,
-  nombre: (d.nombre || d.modelo)?.toUpperCase(),
-  precio: d.precio,
-  stock: d.stock ?? "10",
-  tamano: d.tamano ?? "",
-  clon: d.clon ?? null,
-  tipo: d.tipo,
-  foto: Array.isArray(d.foto) ? d.foto : d.foto ? [d.foto] : [],
-  descripcion: d.descripcion ?? "",
-  otros: d.otros || [],
-}));
+        id: d.id,
+        marca: d.marca,
+        nombre: (d.nombre || d.modelo)?.toUpperCase(),
+        precio: d.precio,
+        stock: d.stock ?? "10",
+        tamano: d.tamano ?? "",
+        clon: d.clon ?? null,
+        tipo: d.tipo,
+        foto: Array.isArray(d.foto) ? d.foto : d.foto ? [d.foto] : [],
+        descripcion: d.descripcion ?? "",
+        otros: d.otros || [],
+      }));
 
       setListaProductos(normalizados);
-      setCopiaProductos(normalizados);
     } catch (error) {
       console.error("Error al cargar productos:", error);
     } finally {
@@ -96,7 +81,6 @@ function ListaProductos() {
       descripcion: "",
       otros: [],
     });
-    setNuevoOtro({ clave: "", valor: "" });
     setCurrentItem(null);
   };
 
@@ -116,64 +100,58 @@ function ListaProductos() {
     }
   };
 
- const handleUpdate = async () => {
-  try {
-    if (!currentItem?.id) {
-      alert("El producto no tiene un ID válido. No se puede actualizar.");
-      return;
+  const handleUpdate = async () => {
+    try {
+      if (!currentItem?.id) {
+        alert("El producto no tiene un ID válido. No se puede actualizar.");
+        return;
+      }
+
+      const id = String(currentItem.id);
+      const checkRes = await fetch(`${API_URL}/${id}`);
+      if (checkRes.status === 404) {
+        alert("Este producto ya no existe. Refrescá la página.");
+        await fetchItems();
+        handleCloseModal();
+        return;
+      }
+
+      const payload = {
+        nombre: nuevoProducto.nombre?.toUpperCase(),
+        marca: nuevoProducto.marca,
+        precio: Number(nuevoProducto.precio),
+        stock: Number(nuevoProducto.stock),
+        tipo: nuevoProducto.tipo,
+        descripcion: nuevoProducto.descripcion ?? "",
+        clon: nuevoProducto.clon ?? "",
+        tamano: nuevoProducto.tamano ?? "",
+        foto: Array.isArray(nuevoProducto.foto)
+          ? nuevoProducto.foto
+          : nuevoProducto.foto
+          ? [nuevoProducto.foto]
+          : [],
+        otros: nuevoProducto.otros ?? [],
+      };
+
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error al actualizar item - status: ${res.status}`);
+      }
+
+      await fetchItems();
+      handleCloseModal();
+    } catch (error) {
+      alert("Error actualizando el producto. Puede que ya no exista o haya un problema en los datos.");
+      console.error("Error en handleUpdate:", error);
+      handleCloseModal();
+      await fetchItems();
     }
-
-    const id = String(currentItem.id);
-    const checkRes = await fetch(`${API_URL}/${id}`);
-    if (checkRes.status === 404) {
-      alert("Este producto ya no existe. Refrescá la página.");
-      await fetchItems(); // actualiza la lista en pantalla
-      handleCloseModal(); // cierra el modal para que no quede abierto con datos obsoletos
-      return;
-    }
-
-    // Formatear correctamente el payload
-    const payload = {
-      nombre: nuevoProducto.nombre?.toUpperCase(),
-      marca: nuevoProducto.marca,
-      precio: Number(nuevoProducto.precio),
-      stock: Number(nuevoProducto.stock),
-      tipo: nuevoProducto.tipo,
-      descripcion: nuevoProducto.descripcion ?? "",
-      clon: nuevoProducto.clon ?? "",
-      tamano: nuevoProducto.tamano ?? "",
-      foto: Array.isArray(nuevoProducto.foto)
-        ? nuevoProducto.foto
-        : nuevoProducto.foto
-        ? [nuevoProducto.foto]
-        : [],
-      otros: nuevoProducto.otros ?? [],
-    };
-
-    console.log("Enviando PUT a:", `${API_URL}/${id}`);
-    console.log("Payload:", payload);
-
-    const res = await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      throw new Error(`Error al actualizar item - status: ${res.status}`);
-    }
-
-    await fetchItems();
-    handleCloseModal();
-  } catch (error) {
-    alert("Error actualizando el producto. Puede que ya no exista o haya un problema en los datos.");
-    console.error("Error en handleUpdate:", error);
-    handleCloseModal();
-    await fetchItems(); // forzar sincronización con la base
-  }
-};
-
-
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Seguro que quieres eliminar este item?")) {
@@ -197,7 +175,7 @@ function ListaProductos() {
   };
 
   const marcas = Array.from(new Set(listaProductos.map(p => p.marca).filter(Boolean)));
-const tipos = Array.from(new Set(listaProductos.map(p => p.tipo).filter(Boolean)));
+  const tipos = Array.from(new Set(listaProductos.map(p => p.tipo).filter(Boolean)));
 
   const productosFiltrados = listaProductos.filter(
     p =>
@@ -320,9 +298,42 @@ const tipos = Array.from(new Set(listaProductos.map(p => p.tipo).filter(Boolean)
               <Form.Label>Tipo</Form.Label>
               <Form.Control name="tipo" value={nuevoProducto.tipo} onChange={handleChange} />
             </Form.Group>
+            {/* Inputs para 3 fotos */}
             <Form.Group className="mb-2">
-              <Form.Label>Foto URL</Form.Label>
-              <Form.Control name="foto" value={nuevoProducto.foto} onChange={handleChange} />
+              <Form.Label>Foto 1 (URL)</Form.Label>
+              <Form.Control
+                type="text"
+                value={nuevoProducto.foto?.[0] || ""}
+                onChange={e => {
+                  const fotos = Array.isArray(nuevoProducto.foto) ? [...nuevoProducto.foto] : ["", "", ""];
+                  fotos[0] = e.target.value;
+                  setNuevoProducto({ ...nuevoProducto, foto: fotos });
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-2">
+              <Form.Label>Foto 2 (URL)</Form.Label>
+              <Form.Control
+                type="text"
+                value={nuevoProducto.foto?.[1] || ""}
+                onChange={e => {
+                  const fotos = Array.isArray(nuevoProducto.foto) ? [...nuevoProducto.foto] : ["", "", ""];
+                  fotos[1] = e.target.value;
+                  setNuevoProducto({ ...nuevoProducto, foto: fotos });
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-2">
+              <Form.Label>Foto 3 (URL)</Form.Label>
+              <Form.Control
+                type="text"
+                value={nuevoProducto.foto?.[2] || ""}
+                onChange={e => {
+                  const fotos = Array.isArray(nuevoProducto.foto) ? [...nuevoProducto.foto] : ["", "", ""];
+                  fotos[2] = e.target.value;
+                  setNuevoProducto({ ...nuevoProducto, foto: fotos });
+                }}
+              />
             </Form.Group>
             <Form.Group>
               <Form.Label>Tamaño</Form.Label>
