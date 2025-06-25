@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { agregarAlCarrito, obtenerCarrito } from "../util/carritoUtils";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CardProducto = ({ producto }) => {
   const { id, marca, nombre, tamano, clon, foto, stock, precio } =
@@ -21,7 +22,11 @@ const CardProducto = ({ producto }) => {
       console.log("Cantidad:", cantidad);
       console.log("Carrito actual:", resultado.carrito);
     } else if (cantidad > producto.stock) {
-      console.log("No hay suficiente stock");
+      Swal.fire({
+        icon: "error",
+        title: "Stock insuficiente",
+        text: `No se puede agregar más de ${producto.stock} unidades.`,
+      });
     }
   };
 
