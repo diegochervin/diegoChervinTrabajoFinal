@@ -11,6 +11,7 @@ function ListaProductos() {
   const [listaProductos, setListaProductos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [busqueda, setBusqueda] = useState("");
+  const [filtroNombre, setFiltroNombre] = useState("");
   const [filtroMarca, setFiltroMarca] = useState("");
   const [filtroStock, setFiltroStock] = useState("");
   const [orden, setOrden] = useState("");
@@ -195,26 +196,14 @@ function ListaProductos() {
     }
   };
 
-  const marcas = useMemo(() => {
-    const todas = listaProductos.map((p) => p.marca);
-    return [...new Set(todas)].sort();
-  }, [listaProductos]);
+  const marcas = Array.from(new Set(listaProductos.map(p => p.marca).filter(Boolean)));
+const tipos = Array.from(new Set(listaProductos.map(p => p.tipo).filter(Boolean)));
 
-  const tipos = useMemo(() => {
-    const todos = listaProductos.map((p) => p.tipo);
-    return [...new Set(todos.filter(Boolean))].sort();
-  }, [listaProductos]);
-
-  const productosFiltrados = useMemo(
-    () =>
-      filtrarProductos(listaProductos, {
-        busqueda,
-        filtroMarca,
-        filtroStock,
-        filtroTipo,
-        orden,
-      }),
-    [listaProductos, busqueda, filtroMarca, filtroStock, filtroTipo, orden]
+  const productosFiltrados = listaProductos.filter(
+    p =>
+      p.nombre.toLowerCase().includes(filtroNombre.toLowerCase()) &&
+      (filtroMarca ? p.marca === filtroMarca : true) &&
+      (filtroTipo ? p.tipo === filtroTipo : true)
   );
 
   return (
@@ -228,6 +217,41 @@ function ListaProductos() {
         }}>
           Agregar Producto
         </Button>
+      </div>
+      <div className="mb-3 d-flex flex-wrap gap-2 align-items-end">
+        <Form.Group>
+          <Form.Label>Buscar por nombre</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Buscar..."
+            value={filtroNombre}
+            onChange={e => setFiltroNombre(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Marca</Form.Label>
+          <Form.Select
+            value={filtroMarca}
+            onChange={e => setFiltroMarca(e.target.value)}
+          >
+            <option value="">Todas</option>
+            {marcas.map(marca => (
+              <option key={marca} value={marca}>{marca}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Tipo</Form.Label>
+          <Form.Select
+            value={filtroTipo}
+            onChange={e => setFiltroTipo(e.target.value)}
+          >
+            <option value="">Todos</option>
+            {tipos.map(tipo => (
+              <option key={tipo} value={tipo}>{tipo}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
       </div>
       {loading ? (
         <Spinner animation="border" />
@@ -244,7 +268,7 @@ function ListaProductos() {
             </tr>
           </thead>
           <tbody>
-            {productosFiltrados.map((producto) => (
+            {productosFiltrados.map(producto => (
               <tr key={producto.id}>
                 <td>{producto.nombre}</td>
                 <td>{producto.marca}</td>
